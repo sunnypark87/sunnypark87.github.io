@@ -1,0 +1,187 @@
+---
+import { getCollection } from 'astro:content';
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/HeaderHobby.astro';
+import Footer from '../../components/Footer.astro';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
+
+// Get all hobby posts
+const hobbyPosts = await getCollection('hobby');
+// Sort posts by publication date (newest first)
+const sortedPosts = hobbyPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<style>
+			.hobby-container {
+				max-width: 1000px;
+				margin: 0 auto;
+				padding: 2rem;
+			}
+	
+			.hobby-header {
+				text-align: center;
+				margin-bottom: 3rem;
+				padding: 2rem 0;
+				background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+				color: white;
+				border-radius: 12px;
+			}
+	
+			.hobby-header h1 {
+				font-size: 2.5rem;
+				margin-bottom: 1rem;
+				font-weight: bold;
+			}
+	
+			.hobby-header p {
+				font-size: 1.1rem;
+				opacity: 0.9;
+			}
+	
+			.posts-grid {
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+				gap: 2rem;
+			}
+	
+			.post-card {
+				background: white;
+				border-radius: 12px;
+				overflow: hidden;
+				box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+				transition: transform 0.3s ease, box-shadow 0.3s ease;
+			}
+	
+			.post-card:hover {
+				transform: translateY(-4px);
+				box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+			}
+	
+			.post-image {
+				width: 100%;
+				height: 200px;
+				overflow: hidden;
+			}
+	
+			.post-image img {
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+			}
+	
+			.post-content {
+				padding: 1.5rem;
+			}
+	
+			.post-meta {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				margin-bottom: 1rem;
+				font-size: 0.9rem;
+				color: #666;
+			}
+	
+			.category {
+				background: #e3f2fd;
+				color: #1976d2;
+				padding: 0.25rem 0.75rem;
+				border-radius: 20px;
+				font-size: 0.8rem;
+				font-weight: 500;
+			}
+	
+			.post-title {
+				margin-bottom: 0.75rem;
+			}
+	
+			.post-title a {
+				color: #333;
+				text-decoration: none;
+				font-size: 1.3rem;
+				font-weight: 600;
+			}
+	
+			.post-title a:hover {
+				color: #667eea;
+			}
+	
+			.post-description {
+				color: #666;
+				line-height: 1.6;
+			}
+	
+			.empty-state {
+				text-align: center;
+				padding: 4rem 2rem;
+				color: #666;
+				font-size: 1.1rem;
+			}
+	
+			@media (max-width: 768px) {
+				.hobby-container {
+					padding: 1rem;
+				}
+	
+				.hobby-header h1 {
+					font-size: 2rem;
+				}
+	
+				.posts-grid {
+					grid-template-columns: 1fr;
+					gap: 1.5rem;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<div class="hobby-container">
+			<header class="hobby-header">
+				<h1>🎨 취미 블로그</h1>
+				<p>음악, 영화, 독서, 여행 등 다양한 취미에 대한 이야기를 나누는 공간입니다.</p>
+			</header>
+	
+			<section class="hobby-posts">
+				{sortedPosts.length > 0 ? (
+					<div class="posts-grid">
+						{sortedPosts.map((post) => (
+							<article class="post-card">
+								{post.data.heroImage && (
+									<div class="post-image">
+										<img src={post.data.heroImage.src} alt={post.data.title} />
+									</div>
+								)}
+								<div class="post-content">
+									<div class="post-meta">
+										<time datetime={post.data.pubDate.toISOString()}>
+											{post.data.pubDate.toLocaleDateString('ko-KR')}
+										</time>
+										{post.data.category && (
+											<span class="category">{post.data.category}</span>
+										)}
+									</div>
+									<!-- 
+									<h2 class="post-title">
+										<a href={`/hobby/${post.slug}/`}>{post.data.title}</a>
+									</h2>
+								-->
+									<p class="post-description">{post.data.description}</p>
+								</div>
+							</article>
+						))}
+					</div>
+				) : (
+					<div class="empty-state">
+						<p>아직 게시된 글이 없습니다. 곧 새로운 이야기를 들려드릴게요! 🎵</p>
+					</div>
+				)}
+			</section>
+		</div>
+		<Footer />
+	</body>
+</html>
