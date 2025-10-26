@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import BaseHead from '../../../components/BaseHead.astro';
 import Layout from '../../../layouts/BlogPost.astro';
 import Header from '../../../components/HeaderHobby.astro';
+import GoogleTag from '../../../components/googleTag.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../../../consts';
 
 // Get all hobby posts
@@ -14,6 +15,7 @@ const sortedPosts = hobbyPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.
 <!doctype html>
 <html lang="en">
 	<head>
+		<GoogleTag />
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 		<style>
 			.hobby-container {
