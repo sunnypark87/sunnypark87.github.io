@@ -1,0 +1,28 @@
+---
+import { type CollectionEntry, getCollection, render } from 'astro:content';
+import Layout from '../../../layouts/MoviePost.astro';
+
+export async function getStaticPaths() {
+	const hobbyPosts = await getCollection('movie');
+	return hobbyPosts.map((post) => ({
+		params: { slug: post.id },
+		props: post,
+	}));
+}
+
+type Props = CollectionEntry<'movie'>;
+
+const post = Astro.props;
+const { Content } = await render(post);
+---
+
+<Layout
+	title={post.data.title}
+	description={post.data.description}
+	pubDate={post.data.pubDate}
+	watchDate={post.data.watchDate}
+	poster={post.data.poster}
+	category={post.data.category}
+>
+	<Content />
+</Layout>

@@ -1,0 +1,232 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import BaseHead from '../components/BaseHeadHobby.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/HeaderHobby.astro';
+import GoogleTag from '../components/googleTag.astro';
+
+type Props = CollectionEntry<'movie'>['data'];
+
+const { title, description, pubDate, watchDate, poster, category } =
+	Astro.props as Props;
+const formattedPubDate = pubDate.toLocaleDateString('ko-KR');
+const formattedWatchDate = watchDate
+	? watchDate.toLocaleDateString('ko-KR')
+	: null;
+---
+
+<html lang="ko">
+	<head>
+		<GoogleTag />
+		<BaseHead title={title} description={description} />
+		<style>
+			body {
+				background: #f9fafc;
+			}
+
+			main {
+				padding: 3rem 1rem;
+			}
+
+			.movie-post {
+				max-width: 800px;
+				margin: 0 auto;
+				padding: 2.5rem 2rem;
+				background: #ffffff;
+				border-radius: 16px;
+				box-shadow: 0 20px 40px -24px rgba(15, 23, 42, 0.4);
+			}
+
+			.poster {
+				margin-bottom: 2rem;
+				border-radius: 12px;
+				overflow: hidden;
+				box-shadow: 0 18px 30px -18px rgba(79, 70, 229, 0.35);
+			}
+
+			.poster img {
+				display: block;
+				width: 100%;
+				height: auto;
+			}
+
+			.post-header {
+				margin-bottom: 2rem;
+				padding-bottom: 1.5rem;
+				border-bottom: 1px solid #e5e7eb;
+			}
+
+			.post-meta {
+				display: flex;
+				flex-wrap: wrap;
+				align-items: center;
+				gap: 0.75rem;
+				font-size: 0.95rem;
+				color: #6b7280;
+			}
+
+			.post-meta time {
+				font-weight: 500;
+			}
+
+			.watch-date {
+				background: #eef2ff;
+				color: #4f46e5;
+				padding: 0.3rem 0.75rem;
+				border-radius: 999px;
+				font-weight: 500;
+			}
+
+			.category {
+				background: #e0f2fe;
+				color: #0284c7;
+				padding: 0.3rem 0.75rem;
+				border-radius: 999px;
+				font-size: 0.85rem;
+				font-weight: 600;
+			}
+
+			.post-header h1 {
+				margin: 1rem 0 0.75rem 0;
+				font-size: 2.65rem;
+				line-height: 1.15;
+				color: #1f2937;
+			}
+
+			.post-description {
+				margin: 0;
+				font-size: 1.15rem;
+				color: #4b5563;
+				line-height: 1.75;
+			}
+
+			.post-content {
+				font-size: 1.08rem;
+				line-height: 1.9;
+				color: #1f2937;
+			}
+
+			.post-content h2 {
+				margin: 2.25rem 0 1rem 0;
+				font-size: 1.9rem;
+				color: #1e293b;
+			}
+
+			.post-content h3 {
+				margin: 1.75rem 0 0.85rem 0;
+				font-size: 1.45rem;
+				color: #334155;
+			}
+
+			.post-content p {
+				margin: 0 0 1.6rem 0;
+			}
+
+			.post-content img {
+				max-width: 100%;
+				height: auto;
+				border-radius: 14px;
+				margin: 2rem 0;
+				box-shadow: 0 16px 32px -22px rgba(15, 23, 42, 0.35);
+			}
+
+			.post-content blockquote {
+				border-left: 4px solid #6366f1;
+				padding-left: 1.5rem;
+				margin: 2rem 0;
+				font-style: italic;
+				color: #4c51bf;
+			}
+
+			.post-content code {
+				background: #f3f4f6;
+				padding: 0.2rem 0.45rem;
+				border-radius: 6px;
+				font-family: 'Courier New', monospace;
+				font-size: 0.95rem;
+			}
+
+			.post-content pre {
+				background: #0f172a;
+				color: #f1f5f9;
+				padding: 1.25rem;
+				border-radius: 16px;
+				overflow-x: auto;
+				margin: 2rem 0;
+			}
+
+			.post-footer {
+				margin-top: 3rem;
+				padding-top: 1.75rem;
+				border-top: 1px solid #e5e7eb;
+				display: flex;
+				justify-content: flex-end;
+			}
+
+			.back-link {
+				color: #4f46e5;
+				text-decoration: none;
+				font-weight: 600;
+				transition: color 0.2s ease;
+			}
+
+			.back-link:hover {
+				color: #312e81;
+			}
+
+			@media (max-width: 768px) {
+				main {
+					padding: 1.5rem 1rem;
+				}
+
+				.movie-post {
+					padding: 1.75rem 1.25rem;
+				}
+
+				.post-header h1 {
+					font-size: 2.15rem;
+				}
+
+				.post-content {
+					font-size: 1rem;
+				}
+
+				.post-footer {
+					justify-content: center;
+				}
+			}
+		</style>
+	</head>
+
+	<body>
+		<Header />
+		<main>
+			<article class="movie-post">
+				{poster && (
+					<div class="poster">
+						<Image width={1020} height={510} src={poster} alt={`${title} 포스터`} />
+					</div>
+				)}
+				<header class="post-header">
+					<div class="post-meta">
+						<time datetime={pubDate.toISOString()}>{formattedPubDate}</time>
+						{formattedWatchDate && (
+							<span class="watch-date">관람일 {formattedWatchDate}</span>
+						)}
+						{category && <span class="category">{category}</span>}
+					</div>
+					<h1>{title}</h1>
+					{description && <p class="post-description">{description}</p>}
+				</header>
+				<div class="post-content">
+					<slot />
+				</div>
+				<footer class="post-footer">
+					<a class="back-link" href="/hobby/">← 취미 블로그로 돌아가기</a>
+				</footer>
+			</article>
+		</main>
+		<Footer />
+	</body>
+</html>

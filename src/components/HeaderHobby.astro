@@ -1,14 +1,19 @@
 ---
-import { SITE_TITLE } from '../consts';
+import { HOBBY_SITE_TITLE } from '../consts';
 import HeaderLink from './HeaderLinkHobby.astro';
 ---
 
 <header>
 	<nav>
-		<h2><a href="/">{SITE_TITLE}</a></h2>
+		<h2>
+			<a href="/hobby">
+				<img src="/logo.png" alt="Logo" class="logo" />
+				{HOBBY_SITE_TITLE}
+			</a>
+		</h2>
 		<div class="internal-links">
 			<HeaderLink href="/hobby">Home</HeaderLink>
-			<HeaderLink href="/movie">영화</HeaderLink>
+			<HeaderLink href="/hobby/movie">Movie</HeaderLink>
 		</div>
 		<div class="social-links">
 			<a href="https://github.com/withastro/astro" target="_blank">
@@ -29,6 +34,7 @@ import HeaderLink from './HeaderLinkHobby.astro';
 		padding: 0 1em;
 		background: white;
 		box-shadow: 0 2px 8px rgba(var(--black), 5%);
+		
 	}
 	h2 {
 		margin: 0;
@@ -38,6 +44,14 @@ import HeaderLink from './HeaderLinkHobby.astro';
 	h2 a,
 	h2 a.active {
 		text-decoration: none;
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+	}
+
+	.logo {
+		width: 34px;
+		height: 34px;
 	}
 	nav {
 		display: flex;
