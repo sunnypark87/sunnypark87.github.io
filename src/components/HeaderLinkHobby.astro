@@ -1,15 +1,15 @@
 ---
 import type { HTMLAttributes } from 'astro/types';
+import { isAborted } from 'astro:schema';
 
 type Props = HTMLAttributes<'a'>;
 
 const { href, class: className, ...props } = Astro.props;
 const pathname = Astro.url.pathname.replace(import.meta.env.BASE_URL, '');
-const subpath = pathname.match(/[^\/]+/g);
-const segs = subpath ?? [];
+const subpath = pathname.match(/[^\/]+/g) ?? [];
 const isHome = href === '/hobby';
-const isExact = href === pathname;
-const isActive = isHome ? (segs.length === 1 && isExact) : isExact;
+const isExact = href == '/' + pathname;
+const isActive = isHome ? (subpath.length === 1 && isExact) : isExact;
 ---
 
 <a href={href} class:list={[className, { active: isActive }]} {...props}>

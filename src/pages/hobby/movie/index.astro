@@ -11,6 +11,7 @@ import { SITE_DESCRIPTION, HOBBY_SITE_TITLE } from '../../../consts';
 const moviePosts = (await getCollection('movie')).sort(
 	(a, b) => b.data.watchDate.valueOf() - a.data.watchDate.valueOf(),
 );
+
 ---
 
 <!doctype html>
