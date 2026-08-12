@@ -1,7 +1,7 @@
-# build output
-dist/
-# generated types
-.astro/
+# Next.js build and static export
+.next/
+out/
+*.tsbuildinfo
 
 # dependencies
 node_modules/
@@ -16,6 +16,11 @@ pnpm-debug.log*
 # environment variables
 .env
 .env.production
+.env.local
+.env.*.local
+
+# test output
+coverage/
 
 # macOS-specific files
 .DS_Store
