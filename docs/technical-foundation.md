@@ -14,8 +14,8 @@
 | Language | TypeScript strict mode |
 | Rendering | Static export (`output: "export"`) |
 | Content source | 저장소 내부 Markdown |
-| Markdown pipeline | `gray-matter` + remark/rehype 계열, 2단계에서 도입 |
-| Schema validation | Zod, 2단계에서 도입 |
+| Markdown pipeline | `gray-matter` + remark/rehype 계열 |
+| Schema validation | Zod |
 | Styling | CSS custom properties + CSS Modules |
 | Package manager | pnpm |
 | Runtime | Node.js 22 LTS |
@@ -78,7 +78,7 @@ pnpm start      out/ 로컬 정적 미리보기
 
 - 기준 런타임은 CI와 `.nvmrc`에서 Node.js 22로 맞춘다.
 - `pnpm-lock.yaml`을 배포와 로컬 재현성의 기준으로 사용한다.
-- pnpm의 설치 스크립트는 기본적으로 허용하지 않으며, 필요한 패키지만 `pnpm-workspace.yaml`의 `onlyBuiltDependencies`에 명시한다. 현재 허용 대상은 Next.js ESLint resolver가 사용하는 `unrs-resolver`다.
+- pnpm의 설치 스크립트는 기본적으로 허용하지 않으며, 필요한 패키지만 `pnpm-workspace.yaml`의 `allowBuilds`에 명시한다. 현재 허용 대상은 Next.js ESLint resolver가 사용하는 `unrs-resolver`와 콘텐츠 검증 CLI의 `tsx`가 사용하는 `esbuild`다.
 - 2026-08-12 초기 구성 시 최신 TypeScript 7은 `eslint-config-next`에 포함된 typescript-eslint의 지원 범위와 맞지 않아 TypeScript 6.0 계열로 고정했다.
 - 같은 시점의 일부 Next.js lint 플러그인이 ESLint 10을 지원하지 않아 ESLint 9 계열로 고정했다.
 - 버전 범위를 올릴 때 경고를 무시하거나 peer dependency를 강제하지 말고 `pnpm check`가 경고 없이 통과하는 조합을 선택한다.

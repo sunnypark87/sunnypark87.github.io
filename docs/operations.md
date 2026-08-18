@@ -28,7 +28,13 @@ PR이나 배포 전에는 다음 명령을 실행한다.
 pnpm check
 ```
 
-이 명령은 lint, typecheck, unit test와 production build를 검사한다. 정적 내보내기 관련 오류는 개발 서버에서 드러나지 않을 수 있으므로 `pnpm build`를 생략하지 않는다.
+이 명령은 lint, typecheck, 콘텐츠 관계 검증, unit test와 production build를 검사한다. 정적 내보내기 관련 오류는 개발 서버에서 드러나지 않을 수 있으므로 `pnpm build`를 생략하지 않는다.
+
+콘텐츠만 검사하려면 다음을 사용한다.
+
+```bash
+pnpm content:validate
+```
 
 빌드 결과를 브라우저에서 확인하려면 다음을 사용한다.
 
@@ -38,6 +44,14 @@ pnpm start
 ```
 
 `out/`은 생성 산출물이므로 커밋하지 않는다.
+
+## 콘텐츠와 이미지 작성
+
+Article은 `content/articles/<slug>/index.md`에 작성한다. Project는 `content/projects/<slug>/index.md`에 작성한다. slug는 소문자 영문·숫자와 하이픈만 사용한다.
+
+Article 이미지는 `public/articles/<slug>/`에 두고 Markdown에서 `/articles/<slug>/<file>`로 참조한다. `content/` 내부 이미지는 현재 자동으로 배포되지 않는다.
+
+초안은 `draft: true`로 설정한다. 개발 환경에서는 직접 URL로 확인할 수 있지만 목록에는 나타나지 않으며 프로덕션 정적 경로로 생성되지 않는다.
 
 ## 배포 운영
 
@@ -110,11 +124,13 @@ Google Tag Manager나 수동 page view 이벤트를 추가할 경우 GA4 자동 
 
 ## 현재 구현 상태
 
-2026-08-12 기준:
+2026-08-18 기준:
 
 - 1단계 기술 기반이 확정되었다.
 - Next.js 정적 프로젝트와 브랜드 토큰의 최소 기반을 구현했다.
 - PR CI와 GitHub Pages 배포 파이프라인을 구현했다.
 - GA4 연결 지점은 구현했으며 실제 측정은 Repository variable 등록 후 활성화된다.
-- Markdown 콘텐츠 파이프라인은 2단계에서 구현한다.
+- Article/Project 콘텐츠 모델과 Markdown 파이프라인 2단계를 구현했다.
+- 현재 `content-pipeline-fixture` Article은 파이프라인 검증용 fixture다.
+- draft 접근, Project 참조, 디렉터리 slug, 관계 중복, 날짜와 이미지 운영 규칙을 안정화했다.
 - 현재 화면은 기반 검증용이며 Home의 최종 UI로 확정된 것이 아니다.

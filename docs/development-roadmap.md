@@ -55,6 +55,12 @@
 
 ## 2. 콘텐츠 모델 설계
 
+### 현재 상태
+
+**Completed — 2026-08-18**
+
+Article/Project 스키마, Markdown 렌더러, 관계 검증, draft 정책과 진단용 Article 경로를 구현했다. 세부 규칙은 [`content-model.md`](content-model.md)에 기록했다.
+
 ### 목표
 
 글이 문제 해결 과정과 지식 간 연결을 일관되게 표현하도록 콘텐츠 구조를 정의한다.
@@ -83,6 +89,17 @@
 - 실제 글 예시가 스키마를 통과한다.
 - 잘못된 메타데이터가 빌드를 실패시킨다.
 - 글과 프로젝트 사이의 연결을 문자열 관례가 아닌 검증 가능한 형태로 표현할 수 있다.
+
+### 구현 결과
+
+- `gray-matter`와 Zod front matter 검증
+- unified/remark/rehype 기반 Markdown, GFM, 수식과 코드 렌더링
+- `content:validate` 빌드 전 관계 검사
+- 공개 Article과 draft Article 분리
+- `/articles/` 및 `/articles/[slug]/` 정적 경로
+- fixture를 통한 스키마와 Markdown 변환 테스트
+- draft 개발 접근과 공개 콘텐츠 관계 무결성 검사
+- 이미지 정적 경로와 읽는 시간 계산 규칙
 
 ## 3. 최소 정보 구조 확정
 
