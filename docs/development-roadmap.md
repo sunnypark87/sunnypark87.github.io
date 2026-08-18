@@ -103,6 +103,14 @@ Article/Project 스키마, Markdown 렌더러, 관계 검증, draft 정책과 �
 
 ## 3. 최소 정보 구조 확정
 
+### 현재 상태
+
+**Initial structure implemented — 2026-08-18**
+
+정보 구조와 초기 사용자 흐름을 문서화하고 Home, Articles, Projects, About, RSS, Sitemap과 robots 경로를 연결했다. 세부 결정은 [`information-architecture.md`](information-architecture.md)와 [`user-flows.md`](user-flows.md)에 기록했다. 최종 페이지 레이아웃과 컴포넌트 디자인은 아직 확정하지 않는다.
+
+페이지별 metadata, RSS discovery, Articles/Projects 빈 상태와 Home·Articles로 복귀할 수 있는 404를 포함한다.
+
 ### 목표
 
 실제 콘텐츠를 찾고 읽는 데 필요한 최소 경로를 정의한다.
@@ -132,6 +140,12 @@ About
 - 분류 변경이 기존 글 URL을 불필요하게 깨뜨리지 않는다.
 
 ## 4. 핵심 사용자 흐름 정의
+
+### 현재 상태
+
+**Initial flows documented — 2026-08-18**
+
+블로그 발견, Article 탐색, 문제 해결 과정 읽기, 콘텐츠 관계 탐색과 Project 탐색 흐름의 초기 기준을 정의했다. 실제 사용성 검증과 Article 하단 연결 UI는 6단계에서 확장한다.
 
 ### 목표
 

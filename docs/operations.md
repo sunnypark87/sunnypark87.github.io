@@ -133,4 +133,6 @@ Google Tag Manager나 수동 page view 이벤트를 추가할 경우 GA4 자동 
 - Article/Project 콘텐츠 모델과 Markdown 파이프라인 2단계를 구현했다.
 - 현재 `content-pipeline-fixture` Article은 파이프라인 검증용 fixture다.
 - draft 접근, Project 참조, 디렉터리 slug, 관계 중복, 날짜와 이미지 운영 규칙을 안정화했다.
+- 최소 정보 구조와 초기 사용자 흐름을 문서화하고 Home, Articles, Projects, About, RSS, Sitemap과 robots 경로를 구현했다.
+- 최종 페이지 레이아웃, Sidebar, 검색, 다크 모드와 Knowledge Graph는 아직 결정하지 않았다.
 - 현재 화면은 기반 검증용이며 Home의 최종 UI로 확정된 것이 아니다.

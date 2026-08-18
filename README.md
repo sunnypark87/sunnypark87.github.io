@@ -36,3 +36,6 @@ pnpm start
 - [구축 로드맵](docs/development-roadmap.md)
 - [기술 기반 결정](docs/technical-foundation.md)
 - [운영 가이드](docs/operations.md)
+- [정보 구조](docs/information-architecture.md)
+- [사용자 흐름](docs/user-flows.md)
+- [콘텐츠 모델](docs/content-model.md)
