@@ -1,6 +1,9 @@
 import Script from "next/script";
 
-const measurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
+const configuredMeasurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
+const measurementId = configuredMeasurementId && /^G-[A-Z0-9]+$/.test(configuredMeasurementId)
+  ? configuredMeasurementId
+  : undefined;
 
 export function GoogleAnalytics() {
   if (process.env.NODE_ENV !== "production" || !measurementId) return null;
