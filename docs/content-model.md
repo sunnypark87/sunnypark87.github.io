@@ -105,7 +105,7 @@ Project의 Article 목록은 Article의 `project` 값을 기준으로 자동 수
 - 공개 Article은 존재하지 않는 글, 자기 자신, draft 글 또는 draft Project를 관계 대상으로 참조할 수 없다.
 - 잘못된 front matter나 관계는 `pnpm content:validate`와 `pnpm check`를 실패시킨다.
 
-검증 대상은 필수 필드, 실제 달력 날짜와 날짜 순서, 허용된 상태·Category, 디렉터리 및 관계 slug 형식, 관계 배열 중복, Article·Project 참조와 자기 참조다. 콘텐츠 디렉터리가 없는 경우만 빈 컬렉션으로 취급하며 권한이나 파일 시스템 오류는 빌드를 실패시킨다.
+검증 대상은 필수 필드, 실제 달력 날짜와 날짜 순서, 허용된 상태·Category, 디렉터리 및 관계 slug 형식, 관계 배열 내부 및 관계 그룹 간 중복, Article·Project 참조와 자기 참조다. 하나의 Article은 `prerequisites`, `relatedArticles`, `nextSteps` 중 가장 구체적인 한 관계로만 지정한다. 콘텐츠 디렉터리가 없는 경우만 빈 컬렉션으로 취급하며 권한이나 파일 시스템 오류는 빌드를 실패시킨다.
 
 ## 글 작성 절차
 

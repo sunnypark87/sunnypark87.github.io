@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default async function ArticlesPage() {
   const articles = await getPublishedArticles();
   return (
-    <main className="content-page">
+    <main className="content-page" id="main-content">
       <p className="content-eyebrow">ARTICLES</p>
       <h1>Articles</h1>
       <p className="content-intro">문제를 발견하고, 지식을 연결하고, 결과를 검증한 기록입니다.</p>
@@ -21,9 +21,10 @@ export default async function ArticlesPage() {
             <li key={article.slug}>
               <Link href={`/articles/${article.slug}/`}>
                 <span>{article.title}</span>
-                <small>{article.category} · {article.publishedAt}</small>
+                <small>{article.status} · {article.category} · {article.publishedAt}</small>
               </Link>
               <p>{article.description}</p>
+              {article.topics.length > 0 ? <small className="article-topics">{article.topics.join(" · ")}</small> : null}
             </li>
           ))}
         </ul>

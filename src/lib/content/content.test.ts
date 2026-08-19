@@ -3,6 +3,8 @@ import { describe, expect, it } from "vitest";
 import { articleFrontmatterSchema, projectFrontmatterSchema } from "./schemas";
 import { renderMarkdown } from "./markdown";
 import { validateRelationships } from "./validation";
+import { buildArticleConnections } from "./articles";
+import type { Article } from "./types";
 
 describe("articleFrontmatterSchema", () => {
   it("accepts a valid article and applies defaults", () => {
@@ -33,6 +35,21 @@ describe("articleFrontmatterSchema", () => {
       title: "A title", description: "A description", publishedAt: "2026-08-18",
       status: "exploring", category: "quant", topics: ["statistics", "statistics"],
     })).toThrow();
+  });
+
+  it("rejects the same article across relationship groups", () => {
+    const result = articleFrontmatterSchema.safeParse({
+      title: "A title", description: "A description", publishedAt: "2026-08-18",
+      status: "exploring", category: "quant",
+      prerequisites: ["shared-article"], relatedArticles: ["shared-article"],
+    });
+    expect(result.success).toBe(false);
+    if (!result.success) {
+      expect(result.error.issues).toContainEqual(expect.objectContaining({
+        path: ["relatedArticles"],
+        message: 'must not repeat "shared-article" from prerequisites',
+      }));
+    }
   });
 
   it("accepts null for a project updated date", () => {
@@ -79,5 +96,21 @@ describe("validateRelationships", () => {
     expect(errors).toContain(`${article.sourcePath}: unknown project "missing-project"`);
     expect(errors).toContain(`${article.sourcePath}: cannot reference itself`);
     expect(errors).toContain(`${article.sourcePath}: unknown article "missing-article"`);
+  });
+});
+
+describe("buildArticleConnections", () => {
+  const article = { slug: "article-a", prerequisites: ["article-b"], relatedArticles: [], nextSteps: ["article-c"] } as unknown as Article;
+  const linked = (slug: string) => ({ ...article, slug, prerequisites: [], nextSteps: [] });
+
+  it("returns only groups with published, resolvable relationships", () => {
+    const groups = buildArticleConnections(article, [article, linked("article-b"), linked("article-c")]);
+    expect(groups.map((group) => group.key)).toEqual(["prerequisites", "nextSteps"]);
+    expect(groups[0]?.articles[0]?.slug).toBe("article-b");
+  });
+
+  it("does not render unresolved relationships", () => {
+    const groups = buildArticleConnections(article, [article]);
+    expect(groups).toEqual([]);
   });
 });

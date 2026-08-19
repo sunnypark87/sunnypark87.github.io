@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <main className="content-page about-page">
+    <main className="content-page about-page" id="main-content">
       <p className="content-eyebrow">ABOUT</p>
       <h1>About Littlebread Lab</h1>
       <p className="content-intro">지식을 문제에 맞게 연결하여 시스템을 구현하는 개발자의 성장 기록입니다.</p>

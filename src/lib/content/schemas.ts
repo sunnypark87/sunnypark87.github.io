@@ -11,6 +11,7 @@ const isoDateSchema = z.string()
   }, "must be a valid date");
 
 const relationFields = ["topics", "prerequisites", "relatedArticles", "nextSteps"] as const;
+const articleRelationFields = ["prerequisites", "relatedArticles", "nextSteps"] as const;
 
 const dateOrderRefinement = <T extends { publishedAt: string; updatedAt?: string }>(value: T, ctx: z.RefinementCtx) => {
   if (value.updatedAt && value.updatedAt < value.publishedAt) {
@@ -36,6 +37,17 @@ export const articleFrontmatterSchema = z.object({
   for (const field of relationFields) {
     if (new Set(value[field]).size !== value[field].length) {
       ctx.addIssue({ code: "custom", path: [field], message: "must not contain duplicate values" });
+    }
+  }
+  const relationOwners = new Map<string, string>();
+  for (const field of articleRelationFields) {
+    for (const slug of value[field]) {
+      const existingField = relationOwners.get(slug);
+      if (existingField) {
+        ctx.addIssue({ code: "custom", path: [field], message: `must not repeat "${slug}" from ${existingField}` });
+      } else {
+        relationOwners.set(slug, field);
+      }
     }
   }
 });

@@ -7,7 +7,7 @@ export default async function Home() {
   const articles = await getPublishedArticles();
   const recentArticles = articles.slice(0, 3);
   return (
-    <main className={styles.page}>
+    <main className={styles.page} id="main-content">
       <div className={styles.connection} aria-hidden="true">
         <span />
         <i />
@@ -19,6 +19,11 @@ export default async function Home() {
       <p className={styles.description}>
         지식을 문제에 맞게 연결하여 시스템을 구현하는 개발자의 성장 기록
       </p>
+      <section className={styles.focus} aria-labelledby="focus-heading">
+        <p className={styles.eyebrow}>CURRENT FOCUS</p>
+        <h2 id="focus-heading">Quant</h2>
+        <p>퀀트를 공부하며 만나는 문제를 컴퓨터과학 지식과 개발 경험으로 풀어갑니다.</p>
+      </section>
       <div className={styles.actions}>
         <Link href="/articles/">Articles 둘러보기</Link>
         <Link href="/about/">블로그 관점 읽기</Link>
