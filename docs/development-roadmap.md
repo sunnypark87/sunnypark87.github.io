@@ -187,6 +187,12 @@ Littlebread Lab의 Connection이 장식이 아니라 실제 탐색 경험으로 
 
 ## 5. 디자인 토큰 구현
 
+### 현재 상태
+
+**In progress — 2026-08-20**
+
+공통 색상·간격·콘텐츠 폭·타이포그래피 역할·semantic color와 Markdown 기본 스타일을 `src/app/globals.css`에 반영하고, 결정 범위는 [`design-tokens.md`](design-tokens.md)에 기록했다. `pnpm check`는 통과했다. Pretendard와 Geist Mono의 실제 정적 폰트 파일 제공 방식은 라이선스와 파일 범위를 확인한 뒤 후속 작업으로 남아 있다.
+
 ### 목표
 
 확정된 브랜드 팔레트와 타이포그래피 역할을 재사용 가능한 코드로 옮긴다.
