@@ -15,7 +15,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "content:validate": "tsx scripts/validate-content.ts",
-    "check": "pnpm lint && pnpm typecheck && pnpm content:validate && pnpm test && pnpm build"
+    "check": "pnpm lint && pnpm typecheck && pnpm content:validate && pnpm test && pnpm build",
+    "content:validate-obsidian": "tsx scripts/validate-obsidian.ts"
   },
   "dependencies": {
     "github-slugger": "^2.0.0",
@@ -34,6 +35,7 @@
     "remark-parse": "^11.0.0",
     "remark-rehype": "^11.1.2",
     "unified": "^11.0.5",
+    "yaml": "^2.9.1",
     "zod": "^4.4.3"
   },
   "devDependencies": {
