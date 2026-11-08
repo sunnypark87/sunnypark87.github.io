@@ -4,7 +4,7 @@
 
 Drive 수집 결과의 `posts/` 아래 Markdown 파일을 읽어 Obsidian Properties(YAML front matter)를 검증한다. 하위 폴더도 포함하며 `drafts/`·`templates/`는 읽지 않는다.
 
-이 규칙은 리뉴얼을 위해 합의한 Drive 콘텐츠용 규칙이다. 기존 `content/articles`의 `publishedAt`·category·draft 규칙을 새 콘텐츠에 적용하지 않는다. 기존 사이트는 그대로 빌드하며, 신규 글의 화면 생성과 본문 변환은 다음 단계다.
+이 규칙은 리뉴얼을 위해 합의한 Drive 콘텐츠용 규칙이다. 기존 `content/articles`의 `publishedAt`·category·draft 규칙을 새 콘텐츠에 적용하지 않는다. 기존 사이트는 그대로 빌드하며, 신규 글의 화면 생성은 다음 단계다. 메타데이터 검증 이후 [본문 변환](obsidian-body.md)을 실행한다.
 
 ## 속성
 
@@ -25,7 +25,7 @@ Drive 수집 결과의 `posts/` 아래 Markdown 파일을 읽어 Obsidian Proper
 - 선택 속성의 생략·null·빈 텍스트는 값 없음으로 처리한다. 필수 속성은 자동 보충하지 않는다.
 - aliases 등 추가 Obsidian 속성은 허용하되 현재 반환하는 메타데이터에는 포함하지 않는다. draft·status 같은 추가 속성은 공개 여부에 영향을 주지 않는다.
 - YAML 중복 키·잘못된 문법·미지원 태그·별칭은 오류로 안내한다.
-- cover는 현재 텍스트 타입만 검사한다. 파일 경로·존재 여부·본문 이미지 참조 검증은 다음 단계다.
+- 이 메타데이터 단계에서는 cover의 텍스트 타입을 검사한다. 후속 본문 변환 단계에서 경로·존재 여부·본문 이미지 참조를 검증한다.
 
 ## 구현과 실행
 

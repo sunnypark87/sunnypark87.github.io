@@ -65,3 +65,8 @@ jobs:
         run: pnpm content:validate-obsidian
         env:
           CONTENT_DIR: ${{ steps.content.outputs.content_dir }}
+      - name: Render Obsidian content
+        id: rendered
+        run: pnpm content:render-obsidian
+        env:
+          CONTENT_DIR: ${{ steps.content.outputs.content_dir }}
