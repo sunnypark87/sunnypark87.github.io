@@ -7,17 +7,19 @@
     "node": ">=22 <23"
   },
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "tsx scripts/site.ts dev",
+    "build": "tsx scripts/site.ts build",
     "start": "serve out",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
     "content:validate": "tsx scripts/validate-content.ts",
-    "check": "pnpm lint && pnpm typecheck && pnpm content:validate && pnpm test && pnpm build",
+    "check": "pnpm lint && pnpm typecheck && pnpm content:validate && pnpm test && pnpm build:sample",
     "content:validate-obsidian": "tsx scripts/validate-obsidian.ts",
-    "content:render-obsidian": "tsx scripts/render-obsidian.ts"
+    "content:render-obsidian": "tsx scripts/render-obsidian.ts",
+    "build:sample": "tsx scripts/site.ts sample",
+    "content:prepare": "tsx scripts/site.ts prepare"
   },
   "dependencies": {
     "github-slugger": "^2.0.0",

@@ -5,6 +5,7 @@ import { SiteHeader } from "@/components/site-header";
 import { siteConfig } from "@/lib/site";
 
 import "./globals.css";
+import "./posts.css";
 import "katex/dist/katex.min.css";
 
 export const metadata: Metadata = {

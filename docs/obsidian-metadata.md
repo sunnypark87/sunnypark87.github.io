@@ -4,7 +4,7 @@
 
 Drive 수집 결과의 `posts/` 아래 Markdown 파일을 읽어 Obsidian Properties(YAML front matter)를 검증한다. 하위 폴더도 포함하며 `drafts/`·`templates/`는 읽지 않는다.
 
-이 규칙은 리뉴얼을 위해 합의한 Drive 콘텐츠용 규칙이다. 기존 `content/articles`의 `publishedAt`·category·draft 규칙을 새 콘텐츠에 적용하지 않는다. 기존 사이트는 그대로 빌드하며, 신규 글의 화면 생성은 다음 단계다. 메타데이터 검증 이후 [본문 변환](obsidian-body.md)을 실행한다.
+이 규칙은 리뉴얼을 위해 합의한 Drive 콘텐츠용 규칙이다. 기존 `content/articles`의 `publishedAt`·category·draft 규칙을 새 콘텐츠에 적용하지 않는다. 신규 글 화면과 정적 빌드 연결은 [콘텐츠 발행](content-publishing.md)에 구현했다. 메타데이터 검증 이후 [본문 변환](obsidian-body.md)을 실행한다.
 
 ## 속성
 

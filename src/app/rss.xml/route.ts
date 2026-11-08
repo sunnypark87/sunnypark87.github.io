@@ -1,17 +1,17 @@
-import { getPublishedArticles } from "@/lib/content";
+import { getSitePosts } from "@/lib/obsidian/site-content";
 import { siteConfig } from "@/lib/site";
 
 export const dynamic = "force-static";
 
 export async function GET() {
-  const articles = await getPublishedArticles();
-  const items = articles.map((article) => `
+  const articles = await getSitePosts();
+  const items = articles.map(({ metadata: article }) => `
     <item>
       <title>${escapeXml(article.title)}</title>
       <description>${escapeXml(article.description)}</description>
-      <link>${siteConfig.url}/articles/${article.slug}/</link>
-      <guid>${siteConfig.url}/articles/${article.slug}/</guid>
-      <pubDate>${new Date(`${article.publishedAt}T00:00:00Z`).toUTCString()}</pubDate>
+      <link>${siteConfig.url}/posts/${article.slug}/</link>
+      <guid>${siteConfig.url}/posts/${article.slug}/</guid>
+      <pubDate>${new Date(`${article.published}T00:00:00+09:00`).toUTCString()}</pubDate>
     </item>`).join("");
   const body = `<?xml version="1.0" encoding="UTF-8"?>
   <rss version="2.0"><channel>
