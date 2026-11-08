@@ -1,0 +1,59 @@
+name: Fetch Drive content
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: fetch-drive-content
+  cancel-in-progress: false
+
+jobs:
+  fetch:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    permissions:
+      contents: read
+      id-token: write
+    env:
+      GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+      GCP_WORKLOAD_IDENTITY_PROVIDER: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+      GCP_SERVICE_ACCOUNT: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+      DRIVE_POSTS_FOLDER_ID: ${{ secrets.DRIVE_POSTS_FOLDER_ID }}
+      DRIVE_ASSETS_FOLDER_ID: ${{ secrets.DRIVE_ASSETS_FOLDER_ID }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Test Drive importer
+        run: node --test scripts/fetch-drive.node-test.mjs
+      - name: Check configuration
+        shell: bash
+        run: |
+          for key in GCP_PROJECT_ID GCP_WORKLOAD_IDENTITY_PROVIDER GCP_SERVICE_ACCOUNT DRIVE_POSTS_FOLDER_ID DRIVE_ASSETS_FOLDER_ID; do
+            if [ -z "${!key}" ]; then
+              echo "::error::Missing repository secret: $key"
+              exit 1
+            fi
+          done
+      - name: Authenticate through service account
+        id: auth
+        uses: google-github-actions/auth@v3
+        with:
+          project_id: ${{ env.GCP_PROJECT_ID }}
+          workload_identity_provider: ${{ env.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ env.GCP_SERVICE_ACCOUNT }}
+          token_format: access_token
+          access_token_scopes: https://www.googleapis.com/auth/drive.readonly
+          access_token_lifetime: 3600s
+          create_credentials_file: false
+          export_environment_variables: false
+      - name: Download and verify content
+        id: content
+        run: node scripts/fetch-drive.mjs
+        env:
+          GOOGLE_DRIVE_ACCESS_TOKEN: ${{ steps.auth.outputs.access_token }}

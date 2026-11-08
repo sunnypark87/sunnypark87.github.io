@@ -29,3 +29,6 @@ jobs:
 
       - name: Run quality checks and build
         run: pnpm check
+
+      - name: Test Drive importer
+        run: node --test scripts/fetch-drive.node-test.mjs
