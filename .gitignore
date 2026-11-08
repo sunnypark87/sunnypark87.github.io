@@ -27,3 +27,7 @@ coverage/
 
 # jetbrains setting folder
 .idea/
+
+# Drive import workspace and temporary credentials
+.content/
+gha-creds-*.json
