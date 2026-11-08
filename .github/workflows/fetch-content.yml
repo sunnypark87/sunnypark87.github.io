@@ -26,9 +26,13 @@ jobs:
       DRIVE_ASSETS_FOLDER_ID: ${{ secrets.DRIVE_ASSETS_FOLDER_ID }}
     steps:
       - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+          cache: pnpm
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
       - name: Test Drive importer
         run: node --test scripts/fetch-drive.node-test.mjs
       - name: Check configuration
@@ -57,3 +61,7 @@ jobs:
         run: node scripts/fetch-drive.mjs
         env:
           GOOGLE_DRIVE_ACCESS_TOKEN: ${{ steps.auth.outputs.access_token }}
+      - name: Validate Obsidian metadata
+        run: pnpm content:validate-obsidian
+        env:
+          CONTENT_DIR: ${{ steps.content.outputs.content_dir }}

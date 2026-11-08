@@ -8,7 +8,7 @@
 - 결과는 `.content/import-<고유값>/`에 저장한다. 성공한 실행에만 `manifest.json`을 작성한다.
 - manifest에는 파일 경로·Drive ID·버전·SHA-256·크기와 코드 커밋·수집 시각을 기록한다.
 - 원본·manifest는 Git, Pages, Actions artifact에 올리지 않는다. 수동 연결 테스트 단계에서는 파일 개수와 검증 결과만 실행 요약에 표시한다.
-- 메타데이터·Obsidian 문법 변환, 사이트 배포 연결, 정기 실행, 30일 복구용 보관은 후속 작업이다.
+- 수집 직후 [Obsidian 메타데이터 검증](obsidian-metadata.md)을 실행한다. 본문 변환, 사이트 배포 연결, 정기 실행, 30일 복구용 보관은 후속 작업이다.
 
 ## 1. Google Cloud 프로젝트 준비
 
@@ -71,7 +71,7 @@ gcloud iam workload-identity-pools providers describe github --project="$BLOG_PR
 1. 코드 검증·PR 검토를 거쳐 수집 워크플로를 기본 브랜치 `main`에 반영한다. 수집 기능은 현재 사이트와 독립적으로 실행한다.
 2. 설정 전파에 몇 분이 걸릴 수 있다. Drive 동기화가 끝난 뒤 실행한다.
 3. **Actions → Fetch Drive content → Run workflow → main**을 선택한다.
-4. 실행 요약에서 `posts`·`assets` 파일 개수와 크기·해시·수집 전후 목록 검증 성공을 확인한다.
+4. 실행 요약에서 `posts`·`assets` 파일 개수, 크기·해시·수집 전후 목록 검증 성공 및 메타데이터 검증 결과를 확인한다.
 
 수집 테스트는 배포하지 않는다. 기존 `Deploy to GitHub Pages`는 main push 시 기존 사이트를 다시 빌드·배포한다. 이 수집 작업은 사이트 콘텐츠를 변경하지 않는다.
 
