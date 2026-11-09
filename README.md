@@ -1,41 +1,21 @@
 # Littlebread Lab
 
-> 지식을 연결해 문제를 해결
->
-> Connect Knowledge. Solve Problems.
+Obsidian·Google Drive 기반 기술 블로그입니다. 리뉴얼 방향과 구현 범위는 [구조 문서](docs/structure.md)를 확인하세요.
 
-Littlebread Lab은 지식을 문제에 맞게 연결하여 시스템을 구현하는 개발자의 성장 기록을 담는 개인 기술 블로그다.
-
-## 현재 상태
-
-Next.js와 GitHub Pages를 사용하는 정적 블로그 기반을 구성했다. Markdown 콘텐츠 모델과 초기 정보 구조를 구현했으며, 현재는 실제 Article 관계를 통한 사용자 흐름을 검증하고 있다. 화면은 아직 최종 Home UI가 아니다.
-
-## 시작하기
+Node.js 22와 package.json의 pnpm 버전을 사용합니다.
 
 ```bash
 pnpm install --frozen-lockfile
 pnpm dev
 ```
 
-프로덕션과 동일한 품질 검사를 실행한다.
+기본 개발 콘텐츠는 `examples/obsidian`입니다. 사용자 폴더로 개발하려면 `CONTENT_DIR=/절대경로/보관함 pnpm dev`를 실행합니다. 글을 바꾼 뒤 개발 서버를 재시작하면 다시 변환합니다.
 
-```bash
-pnpm check
-```
+- `pnpm check`: lint·타입·테스트·샘플 정적 빌드
+- `pnpm build:sample`: 명시적인 샘플 정적 빌드
+- `CONTENT_DIR=.content/local-test pnpm build`: 지정한 공개 콘텐츠 정적 빌드
+- `pnpm start`: 생성된 out 미리보기
 
-정적 빌드 결과를 미리 확인한다.
+실제 발행은 Actions의 **Publish Drive content**를 main에서 실행합니다. main push에도 발행합니다. 샘플이 배포 입력의 대체값으로 사용되지 않도록 일반 build는 CONTENT_DIR을 필수로 받습니다.
 
-```bash
-pnpm build
-pnpm start
-```
-
-## 문서
-
-- [브랜드 가이드](docs/brand-guidelines.md)
-- [구축 로드맵](docs/development-roadmap.md)
-- [기술 기반 결정](docs/technical-foundation.md)
-- [운영 가이드](docs/operations.md)
-- [정보 구조](docs/information-architecture.md)
-- [사용자 흐름](docs/user-flows.md)
-- [콘텐츠 모델](docs/content-model.md)
+[로컬 개발·발행 안내](docs/content-publishing.md) · [Drive 설정](docs/drive-content-setup.md) · [Git 작업 규칙](docs/git-conventions.md)

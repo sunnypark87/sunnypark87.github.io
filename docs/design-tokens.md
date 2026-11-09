@@ -1,3 +1,5 @@
+> 이전 블로그 설계 기록입니다. 현재 리뉴얼의 구현 기준은 [structure.md](structure.md)와 [content-publishing.md](content-publishing.md)를 따릅니다.
+
 # Littlebread Lab 디자인 토큰
 
 이 문서는 5단계에서 확정한 공통 시각 언어를 기록한다. 페이지별 레이아웃이나 카드·Sidebar·목차의 형태를 정하는 문서가 아니다.

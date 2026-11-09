@@ -1,13 +1,15 @@
-name: Fetch Drive content
+name: Publish Drive content
 
 on:
+  push:
+    branches: [main]
   workflow_dispatch:
 
 permissions:
   contents: read
 
 concurrency:
-  group: fetch-drive-content
+  group: pages
   cancel-in-progress: false
 
 jobs:
@@ -17,6 +19,7 @@ jobs:
     timeout-minutes: 45
     permissions:
       contents: read
+      pages: read
       id-token: write
     env:
       GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
@@ -61,12 +64,38 @@ jobs:
         run: node scripts/fetch-drive.mjs
         env:
           GOOGLE_DRIVE_ACCESS_TOKEN: ${{ steps.auth.outputs.access_token }}
-      - name: Validate Obsidian metadata
-        run: pnpm content:validate-obsidian
+      - name: Check code
+        run: pnpm lint && pnpm typecheck && pnpm test
+      - name: Build with Drive content
+        run: pnpm build
         env:
           CONTENT_DIR: ${{ steps.content.outputs.content_dir }}
-      - name: Render Obsidian content
-        id: rendered
-        run: pnpm content:render-obsidian
+      - name: Reject outdated code before upload
         env:
-          CONTENT_DIR: ${{ steps.content.outputs.content_dir }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          latest=$(gh api "repos/$GITHUB_REPOSITORY/commits/main" --jq .sha)
+          if [ "$GITHUB_SHA" != "$latest" ]; then
+            echo "::error::main has advanced. Run the latest workflow instead."
+            exit 1
+          fi
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+      - name: Upload static site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: out
+
+  deploy:
+    needs: fetch
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

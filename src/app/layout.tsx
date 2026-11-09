@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
 
-import { GoogleAnalytics } from "@/components/analytics/google-analytics";
 import { SiteHeader } from "@/components/site-header";
 import { siteConfig } from "@/lib/site";
 
 import "./globals.css";
-import "katex/dist/katex.min.css";
+import "./posts.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -21,7 +20,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <a className="skip-link" href="#main-content">본문으로 건너뛰기</a>
         <SiteHeader />
         {children}
-        <GoogleAnalytics />
       </body>
     </html>
   );

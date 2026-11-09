@@ -31,3 +31,6 @@ coverage/
 # Drive import workspace and temporary credentials
 .content/
 gha-creds-*.json
+
+# Generated public attachments (owned by content:prepare)
+/public/assets/

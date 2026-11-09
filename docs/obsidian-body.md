@@ -6,7 +6,7 @@
 
 기본 Markdown과 GFM(표·목록·취소선 등)을 지원한다. 코드 블록·인라인 코드의 Obsidian 예시는 변환하지 않는다. 원본 HTML은 실행 가능한 마크업으로 통과시키지 않고, 생성한 HTML도 허용된 태그·속성으로 정리한다.
 
-글 목록·상세 페이지, 디자인·CSS, 검색·수식·코드 색상 강조, 실제 첨부 파일 복사와 배포 연결은 이 단계의 범위가 아니다.
+이 모듈은 변환만 담당한다. 글 목록·상세 화면, 참조 첨부 복사와 배포 연결은 후속 구현인 [콘텐츠 발행](content-publishing.md)에서 이 모듈을 사용한다. 검색·수식·코드 색상 강조는 아직 지원하지 않는다.
 
 ## 글 링크
 
@@ -54,7 +54,7 @@
 
 ## Actions와 로컬 실행
 
-`Fetch Drive content`는 수집 → 메타데이터 검증 → 본문 변환 순서로 실행한다. 실패 시 파일·항목별 오류를 모아 표시하고 작업을 실패시킨다.
+`Publish Drive content`는 수집 후 `pnpm build`를 통해 메타데이터 검증 → 본문 변환 → 첨부 복사 → 정적 빌드·배포를 실행한다. 아래 CLI는 변환 결과만 점검할 때 사용한다. 실패 시 파일·항목별 오류를 모아 표시하고 작업을 실패시킨다.
 
 ```bash
 CONTENT_DIR=.content/import-xxx pnpm content:render-obsidian
@@ -62,4 +62,4 @@ CONTENT_DIR=.content/import-xxx pnpm content:render-obsidian
 
 성공하면 `.content/render-<고유값>/content.json`에 HTML·메타데이터·참조 목록을 기록한다. Actions 출력 `rendered_dir`로 결과 위치를 전달하고, 요약에는 글·첨부 개수만 남긴다. 원본이나 변환 결과를 artifact로 업로드하지 않으며 사이트에 배포하지 않는다. 원본은 변경하지 않는다.
 
-이 단계는 정적 페이지에서 사용할 변환 데이터를 준비하는 단계다. 실제 사용자의 Drive 글 변환은 PR 병합 후 수동 실행으로 검증한다.
+독립 CLI 결과와 발행용 준비 결과는 별도 경로를 사용한다. 발행 빌드는 원본부터 다시 검증·변환하여 `.content/site/content.json`을 생성한다.
