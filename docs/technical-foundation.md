@@ -1,3 +1,5 @@
+> 이전 블로그 설계 기록입니다. 현재 리뉴얼의 구현 기준은 [structure.md](structure.md)와 [content-publishing.md](content-publishing.md)를 따릅니다.
+
 # 기술 기반 결정 기록
 
 ## 상태

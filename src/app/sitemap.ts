@@ -7,7 +7,7 @@ export const dynamic = "force-static";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const articles = await getSitePosts();
-  const staticPages = ["/", "/posts/", "/projects/", "/about/"];
+  const staticPages = ["/", "/posts/"];
   return [
     ...staticPages.map((path) => ({ url: `${siteConfig.url}${path}` })),
     ...articles.map(({ metadata: article }) => ({

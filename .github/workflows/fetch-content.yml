@@ -70,7 +70,6 @@ jobs:
         run: pnpm build
         env:
           CONTENT_DIR: ${{ steps.content.outputs.content_dir }}
-          NEXT_PUBLIC_GA_MEASUREMENT_ID: ${{ vars.NEXT_PUBLIC_GA_MEASUREMENT_ID }}
       - name: Reject outdated code before upload
         env:
           GH_TOKEN: ${{ github.token }}
